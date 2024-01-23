@@ -18,6 +18,16 @@ namespace OregonTrailTests
             Assert.Equal(HealthStatus.Dead, result);
         }
 
+        [Fact] public void Vehicle_Stop_Test()
+        {
+            
+            //assure vehicle is stopped upon getting it
+            Vehicle vehicle = new Vehicle();
+            
+            Assert.Equal(VehicleStatus.Stopped, vehicle.Status);
+            
+        }
+
         [Theory]
         [InlineData(HealthStatus.Dead)]
         [InlineData(HealthStatus.VeryPoor)]
