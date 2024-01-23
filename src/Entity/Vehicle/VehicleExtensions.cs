@@ -18,10 +18,10 @@ namespace OregonTrailDotNet.Entity.Vehicle
         /// </summary>
         /// <param name="passengers">List of passengers from the vehicle.</param>
         /// <returns>List of people the method killed, empty list means nobody was killed.</returns>
-        public static IEnumerable<Person.Person> TryKill(this IEnumerable<Person.Person> passengers)
+        public static IEnumerable<Person.IPerson> TryKill(this IEnumerable<Person.IPerson> passengers)
         {
             // Determine if we lost any people, this is separate from items in vehicle.
-            var peopleKilled = new List<Person.Person>();
+            var peopleKilled = new List<Person.IPerson>();
             foreach (var person in passengers)
             {
                 // It all comes down to a dice roll if the storm kills you.

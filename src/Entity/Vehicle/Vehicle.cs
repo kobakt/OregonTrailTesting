@@ -30,7 +30,7 @@ namespace OregonTrailDotNet.Entity.Vehicle
         /// <summary>
         ///     References all of the people inside of the vehicle.
         /// </summary>
-        private List<Person.Person> _passengers;
+        private List<Person.IPerson> _passengers;
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:TrailEntities.Entities.Vehicle" /> class.
@@ -88,7 +88,7 @@ namespace OregonTrailDotNet.Entity.Vehicle
         /// <summary>
         ///     References all of the people inside of the vehicle.
         /// </summary>
-        public ReadOnlyCollection<Person.Person> Passengers => _passengers.AsReadOnly();
+        public ReadOnlyCollection<Person.IPerson> Passengers => _passengers.AsReadOnly();
 
         /// <summary>
         ///     Current ration level, determines the amount food that will be consumed each day of the simulation.
@@ -253,12 +253,12 @@ namespace OregonTrailDotNet.Entity.Vehicle
         /// <summary>
         ///     Locates the leader in the passenger manifest and returns the person object that represents them.
         /// </summary>
-        public Person.Person PassengerLeader
+        public Person.IPerson PassengerLeader
         {
             get
             {
                 // Leaders profession, used to determine points multiplier at end.
-                Person.Person leaderPerson = null;
+                Person.IPerson leaderPerson = null;
 
                 // Check if passenger manifest exists.
                 if (Passengers == null)
@@ -548,7 +548,7 @@ namespace OregonTrailDotNet.Entity.Vehicle
 
         /// <summary>Adds a new person object to the list of vehicle passengers.</summary>
         /// <param name="person">Person that wishes to become a vehicle passenger.</param>
-        public void AddPerson(Person.Person person)
+        public void AddPerson(Person.IPerson person)
         {
             _passengers.Add(person);
         }
@@ -579,7 +579,7 @@ namespace OregonTrailDotNet.Entity.Vehicle
             _inventory = new Dictionary<Entities, SimItem>(DefaultInventory);
 
             // Passengers the vehicle will be moving along the trail.
-            _passengers = new List<Person.Person>();
+            _passengers = new List<Person.IPerson>();
 
             // Money the passengers use collectively to purchase items.
             Balance = startingMonies;

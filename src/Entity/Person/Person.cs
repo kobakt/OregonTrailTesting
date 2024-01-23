@@ -12,7 +12,7 @@ namespace OregonTrailDotNet.Entity.Person
     ///     Represents a human-being. Gender is not tracked, we only care about them as an entity that consumes food and their
     ///     health.
     /// </summary>
-    public sealed class Person : IEntity
+    public sealed class Person : IPerson
     {
         /// <summary>
         ///     Defines the current health of the person. It will be tracked and kept within bounds of HealthMin and HealthMax

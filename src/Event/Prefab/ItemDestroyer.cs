@@ -54,7 +54,7 @@ namespace OregonTrailDotNet.Event.Prefab
             var drownedPassengers = GameSimulationApp.Instance.Vehicle.Passengers.TryKill();
 
             // If the killed passenger list contains any entries we print them out.
-            var passengers = drownedPassengers as IList<Entity.Person.Person> ?? drownedPassengers.ToList();
+            var passengers = drownedPassengers as IList<Entity.Person.IPerson> ?? drownedPassengers.ToList();
             foreach (var person in passengers)
             {
                 // Only proceed if person is actually dead.
