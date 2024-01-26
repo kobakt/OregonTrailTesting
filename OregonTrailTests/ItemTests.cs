@@ -12,35 +12,73 @@ namespace OregonTrailTests
         
 
         [Fact]
-        public void BearBuffaloDuckGooseRabbitSqurrel_ReturnsExpectedSimItem()
+        public void Bear_ReturnsExpectedSimItem()
         {
             // Arrange
             SimItem expectedBear = new SimItem(Entities.Food, "Bear", "pounds", "pound", 2000, 0);
-            SimItem expectedDeer = new SimItem(Entities.Food, "Deer", "pounds", "pound", 2000, 0, 50);
-            SimItem expectedDuck = new SimItem(Entities.Food, "Duck", "pounds", "pound", 2000, 0);
-            SimItem expectedGoose = new SimItem(Entities.Food, "Goose", "pounds", "pound", 2000, 0, 2);
-            SimItem expectedRabbit = new SimItem(Entities.Food, "Rabbit", "pounds", "pound", 2000, 0, 2);
-            SimItem expectedSquirrel = new SimItem(Entities.Food, "Squirrel", "pounds", "pound", 2000, 0);
-            
             // Act
             SimItem actualBear = Animals.Bear;
-            SimItem actualDeer = Animals.Deer;
-            SimItem actualDuck = Animals.Duck;
-            SimItem actualGoose = Animals.Goose;
-            SimItem actualRabbit = Animals.Rabbit;
-            SimItem actualSquirrel = Animals.Squirrel;
-
             // Assert
             Assert.Equal(expectedBear, actualBear);
+        }
+
+        [Fact]
+        public void Deer_ReturnsExpectedSimItem()
+        {
+            //Arrange
+            SimItem expectedDeer = new SimItem(Entities.Food, "Deer", "pounds", "pound", 2000, 0, 50);
+            //Act
+            SimItem actualDeer = Animals.Deer;
+            //Assert
             Assert.Equal(expectedDeer, actualDeer);
+        }
+
+        [Fact]
+        public void Duck_ReturnsExpectedSimItem()
+        {
+            //Arrange
+            SimItem expectedDuck = new SimItem(Entities.Food, "Duck", "pounds", "pound", 2000, 0);
+            //Act
+            SimItem actualDuck = Animals.Duck;
+            //Assert
             Assert.Equal(expectedDuck, actualDuck);
+        }
+
+        [Fact]
+        public void Goose_ReturnsExpectedSimItem()
+        {
+            //Arrange
+            SimItem expectedGoose = new SimItem(Entities.Food, "Goose", "pounds", "pound", 2000, 0, 2);
+            //Act
+            SimItem actualGoose = Animals.Goose;
+            //Assert
             Assert.Equal(expectedGoose, actualGoose);
+        }
+
+        [Fact]
+        public void Rabbit_ReturnsExpectedSimItem()
+        {
+            //Arrange
+            SimItem expectedRabbit = new SimItem(Entities.Food, "Rabbit", "pounds", "pound", 2000, 0, 2);
+            //Act
+            SimItem actualRabbit = Animals.Rabbit;
+            //Assert
             Assert.Equal(expectedRabbit, actualRabbit);
+        }
+
+        [Fact]
+        public void Squirrel_ReturnsExpectedSimItem()
+        {
+            //Arrange
+            SimItem expectedSquirrel = new SimItem(Entities.Food, "Squirrel", "pounds", "pound", 2000, 0);
+            //Act
+            SimItem actualSquirrel = Animals.Squirrel;
+            //Assert
             Assert.Equal(expectedSquirrel, actualSquirrel);
         }
        
         [Fact]
-        public void BuffaloCaribou_ReturnsExpectedSimItem()
+        public void Buffalo_ReturnsExpectedSimItem()
         {
             
             if (GameSimulationApp.Instance == null)
@@ -50,12 +88,26 @@ namespace OregonTrailTests
             // Arrange
             int randomValue = GameSimulationApp.Instance?.Random?.Next(350, 500) ?? 0;
             SimItem expectedBuffalo = new SimItem(Entities.Food, "Buffalo", "pounds", "pound", 2000, 0, randomValue);
-            SimItem expectedCaribou = new SimItem (Entities.Food, "Caribou", "pounds", "pound", 2000, 0, randomValue);
             // Act
             SimItem actualBuffalo = Animals.Buffalo;
-            SimItem actualCaribou = Animals.Caribou;
             // Assert
             Assert.Equal(expectedBuffalo, actualBuffalo);
+            
+        }
+        [Fact]
+
+        public void Caribou_RetursExpectedSimItem()
+        {
+            if (GameSimulationApp.Instance == null)
+            {
+                GameSimulationApp.Create(); 
+            }
+            // Arrange
+            int randomValue = GameSimulationApp.Instance?.Random?.Next(350, 500) ?? 0;
+            SimItem expectedCaribou = new SimItem (Entities.Food, "Caribou", "pounds", "pound", 2000, 0, randomValue);
+            //Act
+            SimItem actualCaribou = Animals.Caribou;
+            //Assert
             Assert.Equal(expectedCaribou, actualCaribou);
         }
         
