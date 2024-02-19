@@ -9,7 +9,7 @@ namespace OregonTrailDotNet
     /// <summary>
     ///     Trail Simulation Game - Console Edition
     /// </summary>
-    internal static class Program
+    public static class Program
     {
         /// <summary>
         ///     Example console app for game simulation entry point.

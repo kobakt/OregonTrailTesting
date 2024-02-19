@@ -21,7 +21,7 @@ namespace OregonTrailDotNet.Window.Travel
     /// <summary>
     ///     Primary game Windows used for advancing simulation down the trail.
     /// </summary>
-    public sealed class Travel : Window<TravelCommands, TravelInfo>
+    public class Travel : Window<TravelCommands, TravelInfo>
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="Window{TCommands,TData}" /> class.
