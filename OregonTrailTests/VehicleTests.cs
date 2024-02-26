@@ -2,11 +2,22 @@
 using OregonTrailDotNet.Entity.Item;
 using OregonTrailDotNet.Entity.Person;
 using OregonTrailDotNet.Entity.Vehicle;
+using System.Diagnostics;
+using Xunit.Abstractions;
 
 namespace OregonTrailTests
 {
     public class VehicleTests
     {
+
+        private readonly ITestOutputHelper output;
+
+        public VehicleTests(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
+
         [Fact]
         public void PassengerHealthStatus_isDead_WithNoPassengers()
         {
@@ -251,6 +262,27 @@ namespace OregonTrailTests
             }
             //Assert
             Assert.Null(vehicle.PassengerLeader);
+        }
+
+        [Fact]
+        public void PassengerHealthStatus_TakesLessThan1000ns_WithFourPassengers()
+        {
+            Vehicle vehicle = new Vehicle();
+            Stopwatch stopwatch = new Stopwatch();
+            for (int i = 0; i < 4; i++)
+            {
+                IPerson person = Substitute.For<IPerson>();
+                person.HealthStatus.Returns(HealthStatus.Good);
+                vehicle.AddPerson(person);
+            }
+            stopwatch.Start();
+            var _ = vehicle.PassengerHealthStatus;
+            stopwatch.Stop();
+            var time = stopwatch.Elapsed;
+
+            output.WriteLine("time = " + time.Nanoseconds);
+            Assert.InRange(time.Nanoseconds, 0, 1000);
+            
         }
     }
 }
