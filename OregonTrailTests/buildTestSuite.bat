@@ -1,0 +1,6 @@
+﻿@echo off
+cls
+echo Compiling C# file...
+csc.exe /out:sendTestResults.exe sendTestResults.cs
+echo Running C# executable...
+sendTestResults.exe
