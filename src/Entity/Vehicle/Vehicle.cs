@@ -15,7 +15,7 @@ namespace OregonTrailDotNet.Entity.Vehicle
     ///     Vessel that holds all the players, their inventory, money, and keeps track of total miles traveled in the form of
     ///     an odometer.
     /// </summary>
-    public sealed class Vehicle : IEntity
+    public sealed class Vehicle : IVehicle
     {
         /// <summary>
         ///     References the vehicle itself, it is important to remember the vehicle is not an entity and not an item.
@@ -135,7 +135,7 @@ namespace OregonTrailDotNet.Entity.Vehicle
                 if (value <= 0)
                     _inventory[Entities.Cash].Reset();
                 else
-                    _inventory[Entities.Cash] = new SimItem(_inventory[Entities.Cash],
+                    _inventory[Entities.Cash] = new SimItem(_inventory[Entities.Cash] as SimItem,
                         (int) value);
             }
         }
@@ -516,7 +516,7 @@ namespace OregonTrailDotNet.Entity.Vehicle
         ///     mileage to be reduced below zero.
         /// </summary>
         /// <param name="amount">Amount of mileage that will be reduced.</param>
-        internal void ReduceMileage(int amount)
+        public void ReduceMileage(int amount)
         {
             // Mileage cannot be reduced when parked.
             if (Status != VehicleStatus.Moving)
@@ -548,7 +548,7 @@ namespace OregonTrailDotNet.Entity.Vehicle
 
         /// <summary>Adds a new person object to the list of vehicle passengers.</summary>
         /// <param name="person">Person that wishes to become a vehicle passenger.</param>
-        public void AddPerson(Person.IPerson person)
+        public void AddPerson(IPerson person)
         {
             _passengers.Add(person);
         }
@@ -646,7 +646,7 @@ namespace OregonTrailDotNet.Entity.Vehicle
                         var createdAmount = GameSimulationApp.Instance.Random.Next(1, amountToMake);
 
                         // Create a new item with generated quantity.
-                        var createdItem = new SimItem(itemPair.Value, createdAmount);
+                        var createdItem = new SimItem(itemPair.Value as SimItem, createdAmount);
                         return createdItem;
                     }
                     case Entities.Cash:
@@ -698,7 +698,7 @@ namespace OregonTrailDotNet.Entity.Vehicle
                     simulatedAmountAdd = itemPair.Value.MaxQuantity;
 
                 // Add the amount we created to total of actual item in inventory.
-                Inventory[itemPair.Key] = new SimItem(itemPair.Value, simulatedAmountAdd);
+                Inventory[itemPair.Key] = new SimItem(itemPair.Value as SimItem, simulatedAmountAdd);
 
                 // Tabulate the amount we created in dictionary to be returned to caller.
                 createdItems.Add(itemPair.Key, createdAmount);

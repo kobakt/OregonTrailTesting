@@ -31,6 +31,7 @@ namespace OregonTrailDotNet.Entity.Person
         ///     can keep track of this and if they recover to full health we will make note about this for the player to see.
         /// </summary>
         private bool _nearDeathExperience;
+        private Vehicle.IVehicle _vehicle;
 
         /// <summary>Initializes a new instance of the <see cref="T:TrailEntities.Entities.Person" /> class.</summary>
         /// <param name="profession">The profession.</param>
@@ -46,7 +47,20 @@ namespace OregonTrailDotNet.Entity.Person
             // Person starts with clean bill of health.
             Infected = false;
             Injured = false;
-            Status = (int) HealthStatus.Good;
+            Status = (int)HealthStatus.Good;
+        }
+
+        public Vehicle.IVehicle Vehicle { 
+            get {
+                if (_vehicle == null)
+                {
+                    return GameSimulationApp.Instance.Vehicle;
+                }
+                return _vehicle;
+            } 
+            set {
+                _vehicle = value;
+            }
         }
 
         /// <summary>
@@ -238,14 +252,14 @@ namespace OregonTrailDotNet.Entity.Person
             var game = GameSimulationApp.Instance;
 
             // Eating poorly raises risk of illness.
-            if (game.Vehicle.Ration == RationLevel.BareBones)
+            if (Vehicle.Ration == RationLevel.BareBones)
                 CheckIllness();
-            else if ((game.Vehicle.Ration == RationLevel.Meager) &&
+            else if ((Vehicle.Ration == RationLevel.Meager) &&
                      game.Random.NextBool())
                 CheckIllness();
 
             // More change for illness if you have no clothes.
-            var costClothes = game.Vehicle.Inventory[Entities.Clothes].TotalValue;
+            var costClothes = Vehicle.Inventory[Entities.Clothes].TotalValue;
             if (costClothes > 22 + 4*game.Random.Next())
             {
                 CheckIllness();
@@ -272,14 +286,14 @@ namespace OregonTrailDotNet.Entity.Person
                 return;
 
             // Grab instance of the game simulation to increase readability.
-            var game = GameSimulationApp.Instance;
+            //var game = GameSimulationApp.Instance;
 
             // Check if player has any food to eat.
-            if (game.Vehicle.Inventory[Entities.Food].Quantity > 0)
+            if (Vehicle.Inventory[Entities.Food].Quantity > 0)
             {
                 // Consume some food based on ration level, then update the cost to check against.
-                game.Vehicle.Inventory[Entities.Food].ReduceQuantity((int) game.Vehicle.Ration*
-                                                                     game.Vehicle.PassengerLivingCount);
+                Vehicle.Inventory[Entities.Food].ReduceQuantity((int) Vehicle.Ration*
+                                                                     Vehicle.PassengerLivingCount);
 
                 // Change to get better when eating well.
                 Heal();
@@ -357,18 +371,18 @@ namespace OregonTrailDotNet.Entity.Person
                 return;
 
             if (game.Random.Next(100) <= 10 +
-                35*((int) game.Vehicle.Ration - 1))
+                35*((int) Vehicle.Ration - 1))
             {
                 // Mild illness.
-                game.Vehicle.ReduceMileage(5);
+                Vehicle.ReduceMileage(5);
                 Damage(10, 50);
             }
             else if (game.Random.Next(100) <= 5 -
-                     40/game.Vehicle.Passengers.Count*
-                     ((int) game.Vehicle.Ration - 1))
+                     40/Vehicle.Passengers.Count*
+                     ((int) Vehicle.Ration - 1))
             {
                 // Severe illness.
-                game.Vehicle.ReduceMileage(15);
+                Vehicle.ReduceMileage(15);
                 Damage(10, 50);
             }
 
@@ -376,22 +390,22 @@ namespace OregonTrailDotNet.Entity.Person
             switch (HealthStatus)
             {
                 case HealthStatus.Good:
-                    if ((Infected || Injured) && (game.Vehicle.Status != VehicleStatus.Stopped))
+                    if ((Infected || Injured) && (Vehicle.Status != VehicleStatus.Stopped))
                     {
-                        game.Vehicle.ReduceMileage(5);
+                        Vehicle.ReduceMileage(5);
                         Damage(10, 50);
                     }
 
                     break;
                 case HealthStatus.Fair:
-                    if ((Infected || Injured) && (game.Vehicle.Status != VehicleStatus.Stopped))
+                    if ((Infected || Injured) && (Vehicle.Status != VehicleStatus.Stopped))
                         if (game.Random.NextBool())
                         {
                             // Hurt the player and reduce total possible mileage this turn.
-                            game.Vehicle.ReduceMileage(5);
+                            Vehicle.ReduceMileage(5);
                             Damage(10, 50);
                         }
-                        else if ((!Infected || !Injured) && (game.Vehicle.Status == VehicleStatus.Stopped))
+                        else if ((!Infected || !Injured) && (Vehicle.Status == VehicleStatus.Stopped))
                         {
                             // Heal the player if their health is below good with no infections or injures.
                             Heal();
@@ -399,16 +413,16 @@ namespace OregonTrailDotNet.Entity.Person
 
                     break;
                 case HealthStatus.Poor:
-                    if ((Infected || Injured) && (game.Vehicle.Status != VehicleStatus.Stopped))
+                    if ((Infected || Injured) && (Vehicle.Status != VehicleStatus.Stopped))
                     {
-                        game.Vehicle.ReduceMileage(10);
+                        Vehicle.ReduceMileage(10);
                         Damage(5, 10);
                     }
 
                     break;
                 case HealthStatus.VeryPoor:
                     _nearDeathExperience = true;
-                    game.Vehicle.ReduceMileage(15);
+                    Vehicle.ReduceMileage(15);
                     Damage(1, 5);
                     break;
                 case HealthStatus.Dead:
