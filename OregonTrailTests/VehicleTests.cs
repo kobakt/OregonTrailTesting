@@ -60,7 +60,6 @@ namespace OregonTrailTests
                 //Assert
                 Assert.Equal(healthStatus, result);
             }
-
         }
 
         [Fact]
