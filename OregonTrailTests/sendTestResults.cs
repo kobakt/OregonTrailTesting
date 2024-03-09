@@ -57,9 +57,9 @@ public class EmailTestResults
         return process.ExitCode;
     }
 
-    public static void Main(string[] args)
-    {
-        EmailTestResults emailSender = new EmailTestResults();
-        emailSender.SendEmailWithAttachment();
-    }
+    //public static void Main(string[] args)
+    //{
+    //    EmailTestResults emailSender = new EmailTestResults();
+    //    emailSender.SendEmailWithAttachment();
+    //}
 }
